@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class levelControl : MonoBehaviour
 {
-    public GameObject previous_level, img_lock, img_unlock;
+    public GameObject previous_level, img_lock, img_unlock, img_complete;
     public GameObject popup_load_map;
     // this is name of the scene will be moved to when click in this level.
     public string level_name;
@@ -17,10 +17,19 @@ public class levelControl : MonoBehaviour
         /// To save PlayerPrefs.SetInt(level_name,1)
         /// </summary>
         /// <returns></returns>
-        PlayerPrefs.SetInt(level_name,0); 
-        is_finish = PlayerPrefs.GetInt(level_name,0) == 1;
+        PlayerPrefs.SetInt(level_name, 0); 
+        is_finish = PlayerPrefs.GetInt(level_name, 0) == 1;
     }
     void Start() {
+        // the map is completed
+        if (is_finish == true) {
+            img_complete.SetActive(true);
+            img_lock.SetActive(false);
+            img_unlock.SetActive(false);
+            return;
+        }
+        img_complete.SetActive(false);
+
         // the first level doesn't have previous level
         if (previous_level == null) is_lock = false;
         // previous level will point to the object move to previous map
